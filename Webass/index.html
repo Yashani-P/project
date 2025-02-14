@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monthly Expense Tracker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        h2 {
+            text-align: center;
+        }
+        .month-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .month-item {
+            margin: 10px;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            text-align: center;
+            width: 150px;
+        }
+        .month-item:hover {
+            background-color: #f1f1f1;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Expense Tracker - Select a Month</h2>
+
+    <div class="month-list">
+        <!-- Month buttons -->
+        <div class="month-item" onclick="goToMonth('January')">January</div>
+        <div class="month-item" onclick="goToMonth('February')">February</div>
+        <div class="month-item" onclick="goToMonth('March')">March</div>
+        <div class="month-item" onclick="goToMonth('April')">April</div>
+        <div class="month-item" onclick="goToMonth('May')">May</div>
+        <div class="month-item" onclick="goToMonth('June')">June</div>
+        <div class="month-item" onclick="goToMonth('July')">July</div>
+        <div class="month-item" onclick="goToMonth('August')">August</div>
+        <div class="month-item" onclick="goToMonth('September')">September</div>
+        <div class="month-item" onclick="goToMonth('October')">October</div>
+        <div class="month-item" onclick="goToMonth('November')">November</div>
+        <div class="month-item" onclick="goToMonth('December')">December</div>
+    </div>
+
+    <script>
+        // Function to navigate to the respective month's tracker page
+        function goToMonth(month) {
+            // Redirect to the respective month page (e.g., january.html, february.html, etc.)
+            window.location.href = `${month}.html`;
+        }
+    </script>
+
+</body>
+</html>

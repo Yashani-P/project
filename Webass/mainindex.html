@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Financial Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <div class="logo">
+        <h1>Financial Dashboard</h1>
+      </div>
+      <ul>
+        <!-- Updated 'Home' link to point to mainindex.html -->
+        <li><a href="mainindex.html">Home</a></li>
+        <!-- Update this link to point to index.html -->
+        <li><a href="index.html">Expense Tracker</a></li>
+        <li><a href="recommendations.html">Recommendations</a></li>
+        <li><a href="income.html">Income</a></li>
+        <li><a href="goals.html">Goals</a></li>
+        <li><a href="journal.html">Journal</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="dashboard">
+    <div class="dashboard-header">
+      <h2>Welcome to Your Financial Dashboard</h2>
+      <p>Track your expenses, income, and set financial goals. Manage your finances easily!</p>
+    </div>
+
+    <div class="dashboard-cards">
+      <div class="card">
+        <h3>Expense Tracker</h3>
+        <p>Keep track of your spending and manage your expenses.</p>
+        <!-- Update the button to go to index.html -->
+        <button onclick="window.location.href='index.html'">Go to Expense Tracker</button>
+      </div>
+      <div class="card">
+        <h3>Recommendations</h3>
+        <p>Get personalized financial recommendations to improve your savings.</p>
+        <button onclick="window.location.href='recommendations.html'">View Recommendations</button>
+      </div>
+      <div class="card">
+        <h3>Income</h3>
+        <p>Track your sources of income and manage your financial flows.</p>
+        <button onclick="window.location.href='income.html'">Manage Income</button>
+      </div>
+      <div class="card">
+        <h3>Goals</h3>
+        <p>Set and track your financial goals like saving or investment targets.</p>
+        <button onclick="window.location.href='goals.html'">View Goals</button>
+      </div>
+      <div class="card">
+        <h3>Journal</h3>
+        <p>Write down your financial thoughts, ideas, and reflections.</p>
+        <button onclick="window.location.href='journal.html'">Open Journal</button>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Financial Dashboard | All rights reserved.</p>
+  </footer>
+</body>
+</html>

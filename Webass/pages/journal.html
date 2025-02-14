@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financial Journal</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .journal-entry {
+            margin-top: 20px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .entry-list {
+            margin-top: 30px;
+        }
+        .entry {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        .entry p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Welcome to Your Financial Journal</h1>
+    <p>Track your financial thoughts and activities!</p>
+
+    <button onclick="window.location.href='newentry.html'">Create New Journal Entry</button>
+
+    <div class="entry-list">
+        <h2>Your Entries</h2>
+        <!-- Existing journal entries will be displayed here -->
+        <div id="entries"></div>
+    </div>
+
+    <script>
+        // Load existing journal entries from localStorage
+        function loadEntries() {
+            const entries = JSON.parse(localStorage.getItem('journalEntries')) || [];
+            const entriesContainer = document.getElementById('entries');
+
+            entriesContainer.innerHTML = ''; // Clear existing entries
+
+            entries.forEach((entry, index) => {
+                const entryDiv = document.createElement('div');
+                entryDiv.classList.add('entry');
+                entryDiv.innerHTML = `
+                    <p><strong>Date:</strong> ${entry.date}</p>
+                    <p><strong>Title:</strong> ${entry.title}</p>
+                    <p><strong>Content:</strong> ${entry.content}</p>
+                `;
+                entriesContainer.appendChild(entryDiv);
+            });
+        }
+
+        loadEntries();
+    </script>
+</body>
+</html>

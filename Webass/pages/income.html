@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Income Tracker</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Optional external styles -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .form-section, .goal-section {
+            margin-bottom: 20px;
+        }
+
+        .form-section input, .form-section button {
+            padding: 10px;
+            margin-right: 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+
+        .goal-section input {
+            width: 200px;
+        }
+
+        .income-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .income-table th, .income-table td {
+            padding: 10px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        .income-table th {
+            background-color: #f4f4f4;
+        }
+
+        .income-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .goal-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .goal-section button {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Income Tracker</h1>
+
+        <!-- Income Input Form -->
+        <div class="form-section">
+            <h3>Enter Your Income</h3>
+            <form id="incomeForm">
+                <input type="number" id="incomeAmount" placeholder="Income Amount" required>
+                <input type="text" id="incomeSource" placeholder="Income Source" required>
+                <button type="submit">Add Income</button>
+            </form>
+        </div>
+
+        <!-- Income Goal Section -->
+        <div class="goal-section">
+            <h3>Set Your Income Goal</h3>
+            <input type="number" id="incomeGoal" placeholder="Income Goal">
+            <button onclick="setIncomeGoal()">Set Goal</button>
+        </div>
+
+        <!-- Display Income Records -->
+        <h3>Income Records</h3>
+        <table class="income-table">
+            <thead>
+                <tr>
+                    <th>Source</th>
+                    <th>Amount</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody id="incomeRecords">
+                <!-- Income records will be displayed here -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        let incomeGoal = 0;
+        let incomeRecords = [];
+
+        // Add Income
+        document.getElementById('incomeForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const amount = document.getElementById('incomeAmount').value;
+            const source = document.getElementById('incomeSource').value;
+
+            const newIncome = {
+                source: source,
+                amount: parseFloat(amount),
+                date: new Date().toLocaleDateString()
+            };
+
+            incomeRecords.push(newIncome);
+            updateIncomeRecords();
+        });
+
+        // Update income records table
+        function updateIncomeRecords() {
+            const incomeRecordsTable = document.getElementById('incomeRecords');
+            incomeRecordsTable.innerHTML = '';
+
+            incomeRecords.forEach(function(record) {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${record.source}</td>
+                    <td>${record.amount}</td>
+                    <td>${record.date}</td>
+                `;
+                incomeRecordsTable.appendChild(row);
+            });
+        }
+
+        // Set Income Goal
+        function setIncomeGoal() {
+            incomeGoal = document.getElementById('incomeGoal').value;
+            alert('Your income goal has been set to: $' + incomeGoal);
+        }
+    </script>
+</body>
+</html>

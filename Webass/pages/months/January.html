@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>January Expense Tracker</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>  <!-- Include Chart.js from CDN -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        h2 {
+            text-align: center;
+        }
+        .form-container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .form-container input,
+        .form-container select,
+        .form-container button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        #expenseChart, #incomeChart {
+            max-width: 400px;
+            margin: 20px auto;
+        }
+        .chart-container {
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>January Expense Tracker</h2>
+
+    <!-- Form for entering daily expenses -->
+    <div class="form-container">
+        <label for="expense-date">Date:</label>
+        <select id="expense-date">
+            <!-- Dropdown for 31 days -->
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+            <option value="12">12</option>
+            <option value="13">13</option>
+            <option value="14">14</option>
+            <option value="15">15</option>
+            <option value="16">16</option>
+            <option value="17">17</option>
+            <option value="18">18</option>
+            <option value="19">19</option>
+            <option value="20">20</option>
+            <option value="21">21</option>
+            <option value="22">22</option>
+            <option value="23">23</option>
+            <option value="24">24</option>
+            <option value="25">25</option>
+            <option value="26">26</option>
+            <option value="27">27</option>
+            <option value="28">28</option>
+            <option value="29">29</option>
+            <option value="30">30</option>
+            <option value="31">31</option>
+        </select>
+
+        <label for="category">Category:</label>
+        <select id="category">
+            <option value="Food">Food</option>
+            <option value="Transportation">Transportation</option>
+            <option value="Entertainment">Entertainment</option>
+            <option value="Utilities">Utilities</option>
+            <option value="Rent">Rent</option>
+        </select>
+
+        <label for="amount">Amount ($):</label>
+        <input type="number" id="amount" placeholder="Enter amount" />
+
+        <button onclick="addExpense()">Add Expense</button>
+    </div>
+
+    <div class="chart-container">
+        <!-- Pie chart container for expenses -->
+        <canvas id="expenseChart" width="400" height="200"></canvas>
+        <!-- Line chart container for income frequency -->
+        <canvas id="incomeChart" width="400" height="200"></canvas>
+    </div>
+
+    <script>
+        const expensesData = {
+            Food: [],
+            Transportation: [],
+            Entertainment: [],
+            Utilities: [],
+            Rent: []
+        };
+
+        const monthlyData = {
+            Food: 0,
+            Transportation: 0,
+            Entertainment: 0,
+            Utilities: 0,
+            Rent: 0
+        };
+
+        const incomeData = Array(31).fill(0); // Initialize an array to track daily income (31 days)
+        let expenseChart = null;
+        let incomeChart = null;
+
+        function addExpense() {
+            const date = document.getElementById('expense-date').value;
+            const category = document.getElementById('category').value;
+            const amount = parseFloat(document.getElementById('amount').value);
+
+            if (isNaN(amount) || amount <= 0 || !date) {
+                alert('Please enter a valid date and amount');
+                return;
+            }
+
+            // Store the expense data
+            expensesData[category].push({ date, amount });
+            monthlyData[category] += amount;
+
+            // Update income frequency data (here assuming the income is added to a specific day)
+            incomeData[date - 1] += amount;
+
+            // Clear input fields after submission
+            document.getElementById('expense-date').value = '';
+            document.getElementById('amount').value = '';
+
+            // Update charts
+            updateCharts();
+        }
+
+        function updateCharts() {
+            const ctxExpense = document.getElementById('expenseChart').getContext('2d');
+            const ctxIncome = document.getElementById('incomeChart').getContext('2d');
+
+            // Update Expense Pie Chart
+            if (expenseChart) {
+                expenseChart.data.datasets[0].data = Object.values(monthlyData);
+                expenseChart.update();
+            } else {
+                expenseChart = new Chart(ctxExpense, {
+                    type: 'pie',
+                    data: {
+                        labels: Object.keys(monthlyData),
+                        datasets: [{
+                            label: 'Monthly Expenses',
+                            data: Object.values(monthlyData),
+                            backgroundColor: ['#FF5733', '#33FF57', '#3357FF', '#FF33A6', '#FFB833'],
+                            borderColor: ['#FFF', '#FFF', '#FFF', '#FFF', '#FFF'],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'top'
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Update Income Frequency Graph (Line Chart)
+            if (incomeChart) {
+                incomeChart.data.datasets[0].data = incomeData;
+                incomeChart.update();
+            } else {
+                incomeChart = new Chart(ctxIncome, {
+                    type: 'line',
+                    data: {
+                        labels: Array.from({ length: 31 }, (_, i) => i + 1),
+                        datasets: [{
+                            label: 'Daily Income',
+                            data: incomeData,
+                            borderColor: '#42A5F5',
+                            backgroundColor: 'rgba(66, 165, 245, 0.2)',
+                            borderWidth: 2,
+                            fill: true
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'top'
+                            }
+                        },
+                        scales: {
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: 'Days of January'
+                                }
+                            },
+                            y: {
+                                title: {
+                                    display: true,
+                                    text: 'Income ($)'
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        }
+    </script>
+
+</body>
+</html>
